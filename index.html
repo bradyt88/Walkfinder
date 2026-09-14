@@ -1,1 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071412">
+  <title>WalkFinder</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #071412;
+      --panel: #0d211d;
+      --panel-light: #132a25;
+      --border: rgba(255,255,255,0.09);
+      --text: #f4f7f5;
+      --muted: #9eaaa6;
+      --green: #63e58b;
+      --green-dark: #1b9d55;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #020807;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+
+    .header {
+      padding: 24px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mountain-logo {
+      font-size: 30px;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .brand-name span {
+      color: var(--green);
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--white);
+      font-size: 19px;
+    }
+
+    /* SEARCH */
+
+    .search-wrap {
+      padding: 8px 20px 14px;
+    }
+
+    .search {
+      width: 100%;
+      height: 52px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--white);
+      padding: 0 18px;
+      outline: none;
+    }
+
+    .search::placeholder {
+      color: #7f8d88;
+    }
+
+    .search:focus {
+      border-color: var(--green);
+    }
+
+    /* CATEGORY BUTTONS */
+
+    .categories {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 0 20px 18px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category {
+      flex: 0 0 auto;
+      min-width: 78px;
+      height: 72px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 12px;
+    }
+
+    .category .emoji {
+      font-size: 22px;
+    }
+
+    .category.active {
+      background: var(--green);
+      color: #062010;
+      border-color: var(--green);
+      font-weight: 700;
+    }
+
+    /* HERO */
+
+    .hero {
+      margin: 0 20px 22px;
+      min-height: 220px;
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.08)),
+        linear-gradient(135deg, #264c3e, #527a61 50%, #18352e);
+    }
+
+    .hero::before {
+      content: "🏔️";
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      font-size: 80px;
+      opacity: .35;
+    }
+
+    .hero-label {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      line-height: 1.05;
+      max-width: 290px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #d7dfdc;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 320px;
+      margin-bottom: 16px;
+    }
+
+    .primary-button {
+      border: none;
+      background: var(--green);
+      color: #062010;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 13px 18px;
+      align-self: flex-start;
+    }
+
+    /* SECTION */
+
+    .section {
+      padding: 0 20px;
+      margin-bottom: 26px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
+    }
+
+    .section-heading h2 {
+      font-size: 21px;
+    }
+
+    .section-heading button {
+      border: none;
+      background: none;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* WALK CARDS */
+
+    .walk-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 13px;
+      transition: .2s ease;
+    }
+
+    .walk-card:hover {
+      border-color: rgba(99,229,139,.4);
+      transform: translateY(-1px);
+    }
+
+    .walk-image {
+      width: 92px;
+      height: 92px;
+      flex: 0 0 92px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #315d48, #6f9974);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+    }
+
+    .walk-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .walk-info h3 {
+      font-size: 16px;
+      margin: 3px 0 7px;
+    }
+
+    .walk-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .rating {
+      color: #ffd34d;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      background: var(--panel-light);
+      border-radius: 20px;
+      padding: 5px 8px;
+      font-size: 10px;
+      color: #c4d0cb;
+    }
+
+    /* DISCOVER MAP PREVIEW */
+
+    .map-preview {
+      margin: 0 20px 26px;
+      height: 230px;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(83,145,95,.5), transparent 30%),
+        radial-gradient(circle at 75% 70%, rgba(50,115,75,.5), transparent 35%),
+        linear-gradient(135deg, #193c31, #244c3a 45%, #142f29);
+      border: 1px solid var(--border);
+    }
+
+    .map-road {
+      position: absolute;
+      background: rgba(220,225,215,.18);
+      height: 2px;
+      transform-origin: left center;
+    }
+
+    .road-one {
+      width: 300px;
+      top: 130px;
+      left: -20px;
+      transform: rotate(-15deg);
+    }
+
+    .road-two {
+      width: 280px;
+      top: 80px;
+      left: 140px;
+      transform: rotate(34deg);
+    }
+
+    .route {
+      position: absolute;
+      width: 220px;
+      height: 115px;
+      border: 5px solid var(--green);
+      border-left-color: transparent;
+      border-radius: 50%;
+      top: 72px;
+      left: 80px;
+      transform: rotate(-18deg);
+      filter: drop-shadow(0 0 5px rgba(99,229,139,.4));
+    }
+
+    .map-title {
+      position: absolute;
+      left: 16px;
+      top: 15px;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .map-button {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: none;
+      background: var(--green);
+      color: #062010;
+      font-weight: 800;
+      padding: 12px 19px;
+      border-radius: 14px;
+      white-space: nowrap;
+    }
+
+    /* BOTTOM NAV */
+
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      height: 74px;
+      background: rgba(7,20,18,.96);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-item {
+      border: none;
+      background: none;
+      color: #77847f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 10px;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 21px;
+    }
+
+    .nav-item.active {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* RECORD BUTTON */
+
+    .record-floating {
+      position: fixed;
+      right: 22px;
+      bottom: 91px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 3px solid #071412;
+      background: var(--green);
+      color: #062010;
+      font-size: 24px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.35);
+      z-index: 20;
+    }
+
+    /* MOBILE */
+
+    @media (min-width: 521px) {
+      body {
+        padding: 25px 0;
+      }
+
+      .app {
+        border-radius: 28px;
+        box-shadow: 0 20px 80px rgba(0,0,0,.45);
+      }
+
+      .record-floating {
+        right: calc(50% - 238px);
+        bottom: 105px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .hero h1 {
+        font-size: 25px;
+      }
+
+      .walk-image {
+        width: 78px;
+        height: 78px;
+        flex-basis: 78px;
+      }
+
+      .category {
+        min-width: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <div class="mountain-logo">🏔️</div>
+        <div class="brand-name">WALK<span>FINDER</span></div>
+      </div>
+
+      <button class="icon-button" aria-label="Profile">👤</button>
+    </header>
+
+    <!-- SEARCH -->
+    <div class="search-wrap">
+      <input
+        class="search"
+        id="searchInput"
+        type="search"
+        placeholder="Search walks, places or areas..."
+      >
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="categories">
+
+      <button class="category active">
+        <span class="emoji">📍</span>
+        Nearby
+      </button>
+
+      <button class="category">
+        <span class="emoji">⛰️</span>
+        Hills
+      </button>
+
+      <button class="category">
+        <span class="emoji">🌲</span>
+        Woodland
+      </button>
+
+      <button class="category">
+        <span class="emoji">🌊</span>
+        Water
+      </button>
+
+      <button class="category">
+        <span class="emoji">🥾</span>
+        Adventure
+      </button>
+
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-label">Discover something new</div>
+
+      <h1>Find paths less travelled.</h1>
+
+      <p>
+        Discover walks, hidden routes and local adventures shared by people like you.
+      </p>
+
+      <button class="primary-button" id="exploreButton">
+        Explore Walks →
+      </button>
+
+    </section>
+
+    <!-- NEARBY WALKS -->
+    <section class="section">
+
+      <div class="section-heading">
+        <h2>Nearby Walks</h2>
+        <button id="seeAllButton">See All →</button>
+      </div>
+
+      <article class="walk-card">
+
+        <div class="walk-image">🌲</div>
+
+        <div class="walk-info">
+          <h3>Pendle View Loop</h3>
+
+          <div class="walk-meta">
+            📍 2.8 miles · Moderate · 1h 20m
+          </div>
+
+          <div class="rating">
+            ★ 4.7 <span style="color:#899690;">(42)</span>
+          </div>
+
+          <div class="tags">
+            <span class="tag">🌲 Woodland</span>
+            <span class="tag">👀 Views</span>
+            <span class="tag">🐕 Dog Friendly</span>
+          </div>
+        </div>
+
+      </article>
+
+      <article class="walk-card">
+
+        <div class="walk-image">🌊</div>
+
+        <div class="walk-info">
+          <h3>River Calder Walk</h3>
+
+          <div class="walk-meta">
+            📍 3.4 miles · Easy · 1h 15m
+          </div>
+
+          <div class="rating">
+            ★ 4.5 <span style="color:#899690;">(28)</span>
+          </div>
+
+          <div class="tags">
+            <span class="tag">🌊 Water</span>
+            <span class="tag">👨‍👩‍👧 Family</span>
+            <span class="tag">🔄 Circular</span>
+          </div>
+        </div>
+
+      </article>
+
+    </section>
+
+    <!-- MAP PREVIEW -->
+    <section class="map-preview">
+
+      <div class="map-title">Explore the Map</div>
+
+      <div class="map-road road-one"></div>
+      <div class="map-road road-two"></div>
+
+      <div class="route"></div>
+
+      <button class="map-button" id="mapButton">
+        🗺️ Explore this area
+      </button>
+
+    </section>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+
+      <button class="nav-item active">
+        <span class="nav-icon">⌂</span>
+        Discover
+      </button>
+
+      <button class="nav-item" id="recordNav">
+        <span class="nav-icon">⏺</span>
+        Record
+      </button>
+
+      <button class="nav-item">
+        <span class="nav-icon">🗺</span>
+        Map
+      </button>
+
+      <button class="nav-item">
+        <span class="nav-icon">🔖</span>
+        Saved
+      </button>
+
+      <button class="nav-item">
+        <span class="nav-icon">♙</span>
+        Profile
+      </button>
+
+    </nav>
+
+  </main>
+
+  <!-- QUICK RECORD BUTTON -->
+  <button
+    class="record-floating"
+    id="recordButton"
+    aria-label="Record a walk"
+  >
+    ▶
+  </button>
+
+  <script>
+    const categories = document.querySelectorAll(".category");
+    const searchInput = document.getElementById("searchInput");
+    const exploreButton = document.getElementById("exploreButton");
+    const mapButton = document.getElementById("mapButton");
+    const recordButton = document.getElementById("recordButton");
+    const recordNav = document.getElementById("recordNav");
+    const seeAllButton = document.getElementById("seeAllButton");
+
+    categories.forEach(category => {
+      category.addEventListener("click", () => {
+        categories.forEach(item => item.classList.remove("active"));
+        category.classList.add("active");
+      });
+    });
+
+    searchInput.addEventListener("input", () => {
+      const value = searchInput.value.trim();
+
+      if (value.length > 0) {
+        searchInput.setAttribute(
+          "aria-label",
+          "Searching for " + value
+        );
+      }
+    });
+
+    exploreButton.addEventListener("click", () => {
+      alert("Walk discovery will be connected in the next stage.");
+    });
+
+    mapButton.addEventListener("click", () => {
+      alert("The interactive map will be connected in the next stage.");
+    });
+
+    recordButton.addEventListener("click", () => {
+      alert("GPS walk recording will be added in the next stage.");
+    });
+
+    recordNav.addEventListener("click", () => {
+      alert("GPS walk recording will be added in the next stage.");
+    });
+
+    seeAllButton.addEventListener("click", () => {
+      alert("The full walk discovery screen will be added next.");
+    });
+  </script>
+
+</body>
+</html>
