@@ -1,0 +1,31 @@
+/* WalkFinder hero image */
+.walkfinder-hero {
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(8, 16, 13, 0.22) 0%,
+      rgba(8, 16, 13, 0.42) 55%,
+      rgba(8, 16, 13, 0.82) 100%
+    ),
+    url("./assets/images/walkfinder-hero.png");
+  background-size: cover;
+  background-position: center 58%;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.walkfinder-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.walkfinder-hero h1,
+.walkfinder-hero h2,
+.walkfinder-hero h3,
+.walkfinder-hero p,
+.walkfinder-hero span,
+.walkfinder-hero a {
+  color: #fff;
+}
