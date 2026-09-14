@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#071412">
+
+<title>Saved Walks - WalkFinder</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
+
+:root{
+--bg:#071412;
+--panel:#0d211d;
+--border:rgba(255,255,255,.09);
+--text:#f4f7f5;
+--muted:#9eaaa6;
+--green:#63e58b;
+--dark:#062010
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#020807;
+color:var(--text);
+min-height:100vh
+}
+
+button{
+font:inherit;
+cursor:pointer
+}
+
+.app{
+max-width:520px;
+min-height:100vh;
+margin:auto;
+background:var(--bg)
+}
+
+.header{
+padding:25px 20px 18px;
+border-bottom:1px solid var(--border)
+}
+
+.header h1{
+font-size:27px;
+margin-bottom:6px
+}
+
+.header p{
+color:var(--muted);
+font-size:12px
+}
+
+.tabs{
+display:grid;
+grid-template-columns:1fr 1fr;
+padding:15px 20px
+}
+
+.tab{
+height:44px;
+border:1px solid var(--border);
+background:var(--panel);
+color:var(--muted)
+}
+
+.tab:first-child{
+border-radius:12px 0 0 12px
+}
+
+.tab:last-child{
+border-radius:0 12px 12px 0
+}
+
+.tab.active{
+background:var(--green);
+color:var(--dark);
+font-weight:bold
+}
+
+.list{
+padding:0 20px
+}
+
+.walk{
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:18px;
+padding:12px;
+display:flex;
+gap:12px;
+margin-bottom:12px
+}
+
+.image{
+width:85px;
+height:85px;
+border-radius:14px;
+background:linear-gradient(135deg,#315d48,#6f9974);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+flex-shrink:0
+}
+
+.info{
+flex:1
+}
+
+.info h2{
+font-size:16px;
+margin:4px 0 7px
+}
+
+.meta{
+color:var(--muted);
+font-size:11px;
+line-height:1.5
+}
+
+.rating{
+color:#ffd34d;
+font-size:12px;
+margin-top:7px
+}
+
+.empty{
+text-align:center;
+padding:60px 25px;
+color:var(--muted);
+font-size:13px
+}
+
+.add{
+margin:15px 20px;
+width:calc(100% - 40px);
+height:52px;
+border:none;
+border-radius:15px;
+background:var(--green);
+color:var(--dark);
+font-weight:800
+}
+
+@media(min-width:521px){
+body{padding:25px 0}
+.app{
+border-radius:28px;
+box-shadow:0 20px 80px rgba(0,0,0,.45)
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<main class="app">
+
+<header class="header">
+
+<h1>Saved Walks</h1>
+
+<p>Your favourite routes and discoveries.</p>
+
+</header>
+
+<div class="tabs">
+
+<button class="tab active">
+Saved
+</button>
+
+<button class="tab">
+My Walks
+</button>
+
+</div>
+
+<section class="list">
+
+<article class="walk">
+
+<div class="image">
+🌲
+</div>
+
+<div class="info">
+
+<h2>Pendle View Loop</h2>
+
+<div class="meta">
+2.8 miles · Moderate<br>
+Approx. 1h 20m
+</div>
+
+<div class="rating">
+★ 4.7
+</div>
+
+</div>
+
+</article>
+
+<article class="walk">
+
+<div class="image">
+🌊
+</div>
+
+<div class="info">
+
+<h2>River Calder Walk</h2>
+
+<div class="meta">
+3.4 miles · Easy<br>
+Approx. 1h 15m
+</div>
+
+<div class="rating">
+★ 4.5
+</div>
+
+</div>
+
+</article>
+
+</section>
+
+<button class="add" id="add">
+＋ Add a Path
+</button>
+
+</main>
+
+<script>
+
+document.getElementById("add").addEventListener(
+"click",
+()=>{
+window.location.href="add-path.html";
+}
+);
+
+</script>
+
+</body>
+</html>
