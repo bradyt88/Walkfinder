@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>Photos - WalkFinder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button" type="button" data-back="route-details.html" aria-label="Go back">←</button>
+      <h1>Photos</h1>
+      <button class="icon-button" type="button" data-page="profile.html" aria-label="Open profile">👤</button>
+    </header>
+
+    <main class="page-content">
+      <section class="photo-stage">
+        <div class="section-header">
+          <h2>Cover Photo</h2>
+        </div>
+        <div class="cover-photo-frame" id="coverPreview"></div>
+
+        <div class="photo-upload-controls">
+          <label class="button-secondary upload-button" for="photoInput">＋ Add Photos</label>
+          <input id="photoInput" type="file" accept="image/*" multiple hidden>
+        </div>
+
+        <div id="photoGrid" class="photo-grid" aria-live="polite"></div>
+      </section>
+
+      <button id="publishButton" class="button-primary full-width" type="button">Continue to Publish</button>
+      <div id="photoMessage" class="inline-message" hidden></div>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item" type="button" data-page="index.html">
+        <span class="nav-icon">⌂</span>
+        <span>Discover</span>
+      </button>
+      <button class="nav-item" type="button" data-page="record-walk.html">
+        <span class="nav-icon">◉</span>
+        <span>Record</span>
+      </button>
+      <button class="nav-item primary-nav" type="button" data-page="add-path.html">
+        <span class="nav-icon">＋</span>
+        <span>Add Path</span>
+      </button>
+      <button class="nav-item" type="button" data-page="saved.html">
+        <span class="nav-icon">★</span>
+        <span>Saved</span>
+      </button>
+      <button class="nav-item" type="button" data-page="profile.html">
+        <span class="nav-icon">☰</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

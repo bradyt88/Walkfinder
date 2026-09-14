@@ -1,807 +1,100 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WalkFinder</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #07110d;
-    color: #f4f7f4;
-    min-height: 100vh;
-}
-
-.app {
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    min-height: 100vh;
-    background: #0b1712;
-    position: relative;
-    padding-bottom: 95px;
-}
-
-/* HEADER */
-
-.header {
-    padding: 24px 20px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.logo span {
-    color: #55d68a;
-}
-
-.profile-button {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #16261d;
-    border: 1px solid #284033;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
-/* SEARCH */
-
-.search {
-    margin: 5px 20px 20px;
-    background: #14221b;
-    border: 1px solid #24372d;
-    border-radius: 15px;
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search input {
-    width: 100%;
-    background: none;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 15px;
-}
-
-.search input::placeholder {
-    color: #829188;
-}
-
-/* HERO */
-
-.hero {
-    margin: 0 20px 22px;
-    border-radius: 22px;
-    padding: 28px 22px;
-    min-height: 190px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(20,55,39,.95),
-            rgba(11,27,20,.96)
-        );
-    border: 1px solid #274635;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.hero-small {
-    color: #63dc91;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 8px;
-}
-
-.hero h1 {
-    font-size: 30px;
-    line-height: 1.05;
-    margin-bottom: 8px;
-}
-
-.hero p {
-    color: #a9b8af;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* CATEGORIES */
-
-.section {
-    padding: 0 20px;
-}
-
-.section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 13px;
-}
-
-.section-title h2 {
-    font-size: 19px;
-}
-
-.section-title button {
-    background: none;
-    border: none;
-    color: #55d68a;
-    font-size: 13px;
-}
-
-.categories {
-    display: flex;
-    gap: 9px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-    margin-bottom: 25px;
-}
-
-.categories::-webkit-scrollbar {
-    display: none;
-}
-
-.category {
-    flex: 0 0 auto;
-    padding: 10px 15px;
-    border-radius: 20px;
-    border: 1px solid #294033;
-    background: #111e17;
-    color: #aebbb3;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.category.active {
-    background: #55d68a;
-    border-color: #55d68a;
-    color: #07110d;
-    font-weight: 700;
-}
-
-/* WALK CARDS */
-
-.walk-list {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-}
-
-.walk-card {
-    background: #111e17;
-    border: 1px solid #22372b;
-    border-radius: 18px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.walk-card:hover {
-    transform: translateY(-2px);
-    border-color: #3f7757;
-}
-
-.walk-image {
-    height: 145px;
-    background:
-        linear-gradient(
-            135deg,
-            #315d43,
-            #14291e 55%,
-            #0e1b15
-        );
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    padding: 14px;
-}
-
-.walk-image .emoji {
-    font-size: 42px;
-    opacity: .85;
-}
-
-.distance {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    background: rgba(0,0,0,.6);
-    border-radius: 20px;
-    padding: 7px 10px;
-    font-size: 12px;
-}
-
-.walk-info {
-    padding: 15px;
-}
-
-.walk-info h3 {
-    font-size: 17px;
-    margin-bottom: 6px;
-}
-
-.walk-location {
-    color: #89998f;
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-
-.walk-meta {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-}
-
-.tag {
-    background: #18281f;
-    color: #a9b8af;
-    border-radius: 12px;
-    padding: 6px 9px;
-    font-size: 11px;
-}
-
-/* MAP */
-
-.map-section {
-    margin-top: 28px;
-}
-
-.map-preview {
-    height: 210px;
-    border-radius: 20px;
-    border: 1px solid #294033;
-    overflow: hidden;
-    position: relative;
-    background:
-        linear-gradient(125deg, #1a2b22, #102019);
-}
-
-.road {
-    position: absolute;
-    height: 2px;
-    background: rgba(180,200,188,.14);
-    width: 130%;
-    transform: rotate(-20deg);
-}
-
-.road.one {
-    top: 35%;
-    left: -10%;
-}
-
-.road.two {
-    top: 60%;
-    left: -10%;
-    transform: rotate(15deg);
-}
-
-.road.three {
-    top: 75%;
-    left: -10%;
-    transform: rotate(-8deg);
-}
-
-.route {
-    position: absolute;
-    width: 220px;
-    height: 120px;
-    left: 70px;
-    top: 50px;
-    border: 4px solid #55d68a;
-    border-left-color: transparent;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    transform: rotate(20deg);
-}
-
-.map-label {
-    position: absolute;
-    left: 15px;
-    top: 15px;
-    background: rgba(0,0,0,.55);
-    padding: 8px 11px;
-    border-radius: 10px;
-    font-size: 12px;
-}
-
-.map-button {
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-    background: #55d68a;
-    color: #07110d;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-weight: 700;
-}
-
-/* FLOATING BUTTON */
-
-.record-float {
-    position: fixed;
-    right: max(20px, calc((100vw - 520px) / 2 + 20px));
-    bottom: 85px;
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #55d68a;
-    color: #07110d;
-    border: none;
-    font-size: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.4);
-    cursor: pointer;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 520px;
-    height: 72px;
-    background: rgba(9,19,14,.97);
-    border-top: 1px solid #22372b;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    z-index: 20;
-}
-
-.nav-item {
-    border: none;
-    background: none;
-    color: #75847b;
-    font-size: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    cursor: pointer;
-}
-
-.nav-item span {
-    font-size: 20px;
-}
-
-.nav-item.active {
-    color: #55d68a;
-}
-
-/* EMPTY STATE */
-
-.empty {
-    display: none;
-    padding: 35px 20px;
-    text-align: center;
-    color: #89998f;
-}
-
-@media (min-width: 521px) {
-    body {
-        background: #020805;
-    }
-
-    .app {
-        box-shadow: 0 0 60px rgba(0,0,0,.4);
-    }
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>WalkFinder</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="walkfinder-hero.css">
 </head>
-
 <body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">WALK<span>FINDER</span></div>
+      <div class="topbar-actions">
+        <button class="icon-button ghost" type="button" data-page="saved.html" aria-label="Saved walks">★</button>
+        <button class="icon-button" type="button" data-page="profile.html" aria-label="Open profile">👤</button>
+      </div>
+    </header>
 
-<div class="app">
+    <main class="page-content">
+      <label class="search-bar" aria-label="Search walks">
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" type="text" placeholder="Search walks, places or paths...">
+      </label>
 
-```
-<header class="header">
-    <div class="logo">WALK<span>FINDER</span></div>
+      <section class="hero-panel walkfinder-hero" aria-label="Discover hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="eyebrow">Discover somewhere new</div>
+          <h1>Find paths<br>less travelled.</h1>
+          <p>Discover walks shared by people who know the area.</p>
+        </div>
+      </section>
 
-    <button class="profile-button" onclick="showComingSoon('Profile')">
-        👤
-    </button>
-</header>
+      <section class="section-block">
+        <div class="section-header">
+          <h2>Explore</h2>
+          <button id="clearFilters" class="text-button" type="button">Clear</button>
+        </div>
 
-<div class="search">
-    🔎
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Search walks, places or paths..."
-    >
-</div>
+        <div class="category-list">
+          <button class="category-chip active" type="button" data-category="all">Nearby</button>
+          <button class="category-chip" type="button" data-category="hills">Hills</button>
+          <button class="category-chip" type="button" data-category="woodland">Woodland</button>
+          <button class="category-chip" type="button" data-category="water">Water</button>
+          <button class="category-chip" type="button" data-category="adventure">Adventure</button>
+        </div>
 
-<section class="hero">
-    <div class="hero-small">Discover somewhere new</div>
+        <div class="section-header">
+          <h2>Nearby walks</h2>
+        </div>
 
-    <h1>Find paths<br>less travelled.</h1>
+        <div id="walkList" class="walk-list" aria-live="polite"></div>
 
-    <p>
-        Discover walks shared by people who know the area.
-    </p>
-</section>
+        <div id="emptyState" class="empty-state" hidden>No walks found.</div>
 
-<section class="section">
-
-    <div class="section-title">
-        <h2>Explore</h2>
-        <button onclick="clearFilters()">Clear</button>
-    </div>
-
-    <div class="categories">
-
-        <button class="category active" data-category="all">
-            Nearby
-        </button>
-
-        <button class="category" data-category="hills">
-            Hills
-        </button>
-
-        <button class="category" data-category="woodland">
-            Woodland
-        </button>
-
-        <button class="category" data-category="water">
-            Water
-        </button>
-
-        <button class="category" data-category="adventure">
-            Adventure
-        </button>
-
-    </div>
-
-    <div class="section-title">
-        <h2>Nearby walks</h2>
-        <button onclick="showComingSoon('More walks')">
-            View all
-        </button>
-    </div>
-
-    <div class="walk-list" id="walkList">
-
-        <article
-            class="walk-card"
-            data-name="Pendle View Loop"
-            data-location="Pendle Lancashire"
-            data-category="hills"
-            onclick="openWalk('Pendle View Loop')"
-        >
-
-            <div class="walk-image">
-                <div class="emoji">⛰️</div>
-                <div class="distance">4.8 mi</div>
-            </div>
-
-            <div class="walk-info">
-
-                <h3>Pendle View Loop</h3>
-
-                <div class="walk-location">
-                    📍 Pendle, Lancashire
-                </div>
-
-                <div class="walk-meta">
-                    <span class="tag">Hills</span>
-                    <span class="tag">Views</span>
-                    <span class="tag">Moderate</span>
-                </div>
-
-            </div>
-
-        </article>
-
-        <article
-            class="walk-card"
-            data-name="River Calder Walk"
-            data-location="River Calder Lancashire"
-            data-category="water"
-            onclick="openWalk('River Calder Walk')"
-        >
-
-            <div class="walk-image">
-                <div class="emoji">🌊</div>
-                <div class="distance">3.2 mi</div>
-            </div>
-
-            <div class="walk-info">
-
-                <h3>River Calder Walk</h3>
-
-                <div class="walk-location">
-                    📍 River Calder, Lancashire
-                </div>
-
-                <div class="walk-meta">
-                    <span class="tag">Water</span>
-                    <span class="tag">Family</span>
-                    <span class="tag">Easy</span>
-                </div>
-
-            </div>
-
-        </article>
-
-        <article
-            class="walk-card"
-            data-name="Hidden Woodland Path"
-            data-location="Lancashire woodland"
-            data-category="woodland"
-            onclick="openWalk('Hidden Woodland Path')"
-        >
-
-            <div class="walk-image">
-                <div class="emoji">🌲</div>
-                <div class="distance">2.6 mi</div>
-            </div>
-
-            <div class="walk-info">
-
-                <h3>Hidden Woodland Path</h3>
-
-                <div class="walk-location">
-                    📍 Lancashire
-                </div>
-
-                <div class="walk-meta">
-                    <span class="tag">Woodland</span>
-                    <span class="tag">Photography</span>
-                    <span class="tag">Easy</span>
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-    <div class="empty" id="emptyState">
-        No walks found.
-    </div>
-
-    <div class="map-section">
-
-        <div class="section-title">
+        <div class="map-section">
+          <div class="section-header">
             <h2>Explore the map</h2>
+          </div>
+
+          <div id="discoverMap" class="map-preview leaflet-map" aria-label="Interactive WalkFinder map">
+            <div class="map-label">🗺️ WalkFinder map</div>
+            <button class="map-cta" type="button" data-page="add-path.html">Open map</button>
+          </div>
         </div>
-
-        <div class="map-preview">
-
-            <div class="road one"></div>
-            <div class="road two"></div>
-            <div class="road three"></div>
-
-            <div class="route"></div>
-
-            <div class="map-label">
-                🗺️ WalkFinder Map
-            </div>
-
-            <button
-                class="map-button"
-                onclick="showComingSoon('Full Map')"
-            >
-                Open Map
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-```
-
-</div>
-
-<button
-class="record-float"
-onclick="window.location.href='record-walk.html'"
-title="Record a walk"
-
->
-
-```
-⏺
-```
-
-</button>
-
-<nav class="bottom-nav">
-
-```
-<button
-    class="nav-item active"
-    onclick="window.location.href='index.html'"
->
-    <span>🏠</span>
-    Discover
-</button>
-
-<button
-    class="nav-item"
-    onclick="window.location.href='record-walk.html'"
->
-    <span>⏺</span>
-    Record
-</button>
-
-<button
-    class="nav-item"
-    onclick="window.location.href='add-path.html'"
->
-    <span>＋</span>
-    Add Path
-</button>
-
-<button
-    class="nav-item"
-    onclick="window.location.href='saved.html'"
->
-    <span>🔖</span>
-    Saved
-</button>
-
-<button
-    class="nav-item"
-    onclick="showComingSoon('Profile')"
->
-    <span>👤</span>
-    Profile
-</button>
-```
-
-</nav>
-
-<script>
-
-/* SEARCH */
-
-const searchInput = document.getElementById("searchInput");
-const walkCards = document.querySelectorAll(".walk-card");
-const emptyState = document.getElementById("emptyState");
-
-searchInput.addEventListener("input", function () {
-
-    const search = this.value.toLowerCase().trim();
-
-    let visible = 0;
-
-    walkCards.forEach(card => {
-
-        const name = card.dataset.name.toLowerCase();
-        const location = card.dataset.location.toLowerCase();
-
-        const matches =
-            name.includes(search) ||
-            location.includes(search);
-
-        card.style.display = matches ? "block" : "none";
-
-        if (matches) visible++;
-
-    });
-
-    emptyState.style.display =
-        visible === 0 ? "block" : "none";
-
-});
-
-
-/* CATEGORIES */
-
-const categoryButtons =
-    document.querySelectorAll(".category");
-
-categoryButtons.forEach(button => {
-
-    button.addEventListener("click", function () {
-
-        categoryButtons.forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-        this.classList.add("active");
-
-        const category =
-            this.dataset.category;
-
-        let visible = 0;
-
-        walkCards.forEach(card => {
-
-            const cardCategory =
-                card.dataset.category;
-
-            const matches =
-                category === "all" ||
-                cardCategory === category;
-
-            card.style.display =
-                matches ? "block" : "none";
-
-            if (matches) visible++;
-
-        });
-
-        emptyState.style.display =
-            visible === 0 ? "block" : "none";
-
-    });
-
-});
-
-
-/* CLEAR FILTERS */
-
-function clearFilters() {
-
-    searchInput.value = "";
-
-    categoryButtons.forEach(btn =>
-        btn.classList.remove("active")
-    );
-
-    categoryButtons[0].classList.add("active");
-
-    walkCards.forEach(card =>
-        card.style.display = "block"
-    );
-
-    emptyState.style.display = "none";
-}
-
-
-/* WALK DETAIL */
-
-function openWalk(name) {
-
-    alert(
-        name +
-        "\n\nWalk details will become a full route page in the next build stage."
-    );
-
-}
-
-
-/* PLACEHOLDER */
-
-function showComingSoon(feature) {
-
-    alert(
-        feature +
-        "\n\nThis feature is part of the next development stage."
-    );
-
-}
-
-</script>
-
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" type="button" data-page="index.html">
+        <span class="nav-icon">⌂</span>
+        <span>Discover</span>
+      </button>
+      <button class="nav-item" type="button" data-page="record-walk.html">
+        <span class="nav-icon">◉</span>
+        <span>Record</span>
+      </button>
+      <button class="nav-item primary-nav" type="button" data-page="add-path.html">
+        <span class="nav-icon">＋</span>
+        <span>Add Path</span>
+      </button>
+      <button class="nav-item" type="button" data-page="saved.html">
+        <span class="nav-icon">★</span>
+        <span>Saved</span>
+      </button>
+      <button class="nav-item" type="button" data-page="profile.html">
+        <span class="nav-icon">☰</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="map.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "name": "walkfinder",
+  "version": "1.0.0",
+  "description": "Community-powered walking route discovery and adventure app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradyt88/Walkfinder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bradyt88/Walkfinder/issues"
+  },
+  "homepage": "https://github.com/bradyt88/Walkfinder#readme"
+}

@@ -3,433 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#071412">
+  <meta name="theme-color" content="#07110d">
   <title>Add a Path - WalkFinder</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #071412;
-      --panel: #0d211d;
-      --panel-light: #132a25;
-      --border: rgba(255,255,255,0.09);
-      --text: #f4f7f5;
-      --muted: #9eaaa6;
-      --green: #63e58b;
-      --dark-green: #062010;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #020807;
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 520px;
-      min-height: 100vh;
-      margin: 0 auto;
-      background: var(--bg);
-      overflow: hidden;
-    }
-
-    /* HEADER */
-
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 22px 20px 14px;
-    }
-
-    .back {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: white;
-      font-size: 22px;
-    }
-
-    .header h1 {
-      font-size: 22px;
-    }
-
-    /* PROGRESS */
-
-    .progress {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 24px 24px;
-    }
-
-    .step {
-      text-align: center;
-      flex: 1;
-      position: relative;
-    }
-
-    .step:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      height: 1px;
-      background: var(--border);
-      top: 15px;
-      left: 58%;
-      width: 84%;
-    }
-
-    .circle {
-      width: 30px;
-      height: 30px;
-      margin: 0 auto 7px;
-      border-radius: 50%;
-      border: 1px solid #64736d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      position: relative;
-      z-index: 2;
-      background: var(--bg);
-    }
-
-    .step.active .circle {
-      background: var(--green);
-      border-color: var(--green);
-      color: var(--dark-green);
-      font-weight: bold;
-    }
-
-    .step span {
-      font-size: 9px;
-      color: var(--muted);
-    }
-
-    .step.active span {
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    /* INTRO */
-
-    .intro {
-      padding: 0 20px 20px;
-    }
-
-    .intro h2 {
-      font-size: 25px;
-      margin-bottom: 7px;
-    }
-
-    .intro p {
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    /* CHOICES */
-
-    .choice {
-      margin: 0 20px 14px;
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .choice-icon {
-      width: 58px;
-      height: 58px;
-      flex: 0 0 58px;
-      border-radius: 17px;
-      background: var(--panel-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 29px;
-    }
-
-    .choice-content {
-      flex: 1;
-    }
-
-    .choice h3 {
-      font-size: 17px;
-      margin-bottom: 6px;
-    }
-
-    .choice p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .choice-arrow {
-      color: var(--green);
-      font-size: 22px;
-    }
-
-    .choice:hover {
-      border-color: rgba(99,229,139,.45);
-    }
-
-    /* OR */
-
-    .or {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 30px 18px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .or::before,
-    .or::after {
-      content: "";
-      height: 1px;
-      background: var(--border);
-      flex: 1;
-    }
-
-    /* TIP */
-
-    .tip {
-      margin: 4px 20px 25px;
-      padding: 15px;
-      border-radius: 16px;
-      background: rgba(99,229,139,.07);
-      border: 1px solid rgba(99,229,139,.16);
-    }
-
-    .tip-title {
-      color: var(--green);
-      font-weight: bold;
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    .tip p {
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    /* BOTTOM NAV */
-
-    .bottom-nav {
-      position: sticky;
-      bottom: 0;
-      height: 74px;
-      background: rgba(7,20,18,.97);
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-    }
-
-    .nav-item {
-      border: none;
-      background: none;
-      color: #77847f;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-size: 10px;
-    }
-
-    .nav-icon {
-      font-size: 20px;
-    }
-
-    .nav-item.active {
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    /* MOBILE */
-
-    @media (min-width: 521px) {
-      body {
-        padding: 25px 0;
-      }
-
-      .app {
-        border-radius: 28px;
-        box-shadow: 0 20px 80px rgba(0,0,0,.45);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-  <main class="app">
-
-    <header class="header">
-      <button class="back" id="backButton" aria-label="Go back">‹</button>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button" type="button" data-back="index.html" aria-label="Go back">←</button>
       <h1>Add a Path</h1>
+      <button class="icon-button" type="button" data-page="profile.html" aria-label="Open profile">👤</button>
     </header>
 
-    <section class="progress">
+    <main class="page-content">
+      <section class="intro-block">
+        <div class="eyebrow">Start a walk</div>
+        <h2>How do you want to add your path?</h2>
+        <p>Record somewhere you’ve walked, or create a route you want to plan ahead.</p>
+      </section>
 
-      <div class="step active">
-        <div class="circle">1</div>
-        <span>Start</span>
-      </div>
+      <button class="choice-card" type="button" data-page="record-walk.html">
+        <div class="choice-icon icon-record"></div>
+        <div class="choice-copy">
+          <h3>Record a Walk</h3>
+          <p>Track your walk as you go and turn it into a route you can finish and publish.</p>
+        </div>
+        <div class="choice-arrow">›</div>
+      </button>
 
-      <div class="step">
-        <div class="circle">2</div>
-        <span>Route</span>
-      </div>
+      <div class="divider">or</div>
 
-      <div class="step">
-        <div class="circle">3</div>
-        <span>Details</span>
-      </div>
+      <button class="choice-card" type="button" data-page="draw-route.html">
+        <div class="choice-icon icon-draw"></div>
+        <div class="choice-copy">
+          <h3>Draw a Route</h3>
+          <p>Plan a route by placing points on the map and turn it into a discoverable walk.</p>
+        </div>
+        <div class="choice-arrow">›</div>
+      </button>
 
-      <div class="step">
-        <div class="circle">4</div>
-        <span>Photos</span>
-      </div>
+      <section class="tip-box">
+        <div class="tip-title">WalkFinder tip</div>
+        <p>You can add photos, note trail conditions and tell other walkers about parking, gates and navigation advice.</p>
+      </section>
+    </main>
 
-      <div class="step">
-        <div class="circle">5</div>
-        <span>Publish</span>
-      </div>
-
-    </section>
-
-    <section class="intro">
-      <h2>How do you want to add your path?</h2>
-
-      <p>
-        Record somewhere you've walked, or create a route for an adventure
-        you want to plan.
-      </p>
-    </section>
-
-    <button class="choice" id="recordButton">
-
-      <div class="choice-icon">🥾</div>
-
-      <div class="choice-content">
-        <h3>Record a Walk</h3>
-
-        <p>
-          Track your walk in real time using GPS. Perfect for discovering
-          new or unplanned routes.
-        </p>
-      </div>
-
-      <div class="choice-arrow">›</div>
-
-    </button>
-
-    <div class="or">OR</div>
-
-    <button class="choice" id="drawButton">
-
-      <div class="choice-icon">✏️</div>
-
-      <div class="choice-content">
-        <h3>Draw a Route</h3>
-
-        <p>
-          Plan a route by placing points on the map. Great when you know
-          where you want to go.
-        </p>
-      </div>
-
-      <div class="choice-arrow">›</div>
-
-    </button>
-
-    <section class="tip">
-
-      <div class="tip-title">💡 WalkFinder Tip</div>
-
-      <p>
-        You can add photos, mark interesting locations and tell other
-        walkers about conditions such as mud, difficult sections,
-        parking or poor paths.
-      </p>
-
-    </section>
-
-    <nav class="bottom-nav">
-
-      <button class="nav-item" id="discoverNav">
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item" type="button" data-page="index.html">
         <span class="nav-icon">⌂</span>
-        Discover
+        <span>Discover</span>
       </button>
-
-      <button class="nav-item">
-        <span class="nav-icon">⏺</span>
-        Record
+      <button class="nav-item" type="button" data-page="record-walk.html">
+        <span class="nav-icon">◉</span>
+        <span>Record</span>
       </button>
-
-      <button class="nav-item active">
+      <button class="nav-item primary-nav active" type="button" data-page="add-path.html">
         <span class="nav-icon">＋</span>
-        Add Path
+        <span>Add Path</span>
       </button>
-
-      <button class="nav-item">
-        <span class="nav-icon">🔖</span>
-        Saved
+      <button class="nav-item" type="button" data-page="saved.html">
+        <span class="nav-icon">★</span>
+        <span>Saved</span>
       </button>
-
-      <button class="nav-item">
-        <span class="nav-icon">♙</span>
-        Profile
+      <button class="nav-item" type="button" data-page="profile.html">
+        <span class="nav-icon">☰</span>
+        <span>Profile</span>
       </button>
-
     </nav>
+  </div>
 
-  </main>
-
-  <script>
-
-    const backButton = document.getElementById("backButton");
-    const discoverNav = document.getElementById("discoverNav");
-    const recordButton = document.getElementById("recordButton");
-    const drawButton = document.getElementById("drawButton");
-
-    backButton.addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
-
-    discoverNav.addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
-
-    recordButton.addEventListener("click", () => {
-  window.location.href = "record-walk.html";
-});
-
-    drawButton.addEventListener("click", () => {
-      alert("Map route drawing will be connected in the next build stage.");
-    });
-
-  </script>
-
+  <script src="app.js"></script>
 </body>
 </html>

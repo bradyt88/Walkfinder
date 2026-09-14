@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky2" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#5d7d65"/>
+      <stop offset="35%" stop-color="#7aa182"/>
+      <stop offset="100%" stop-color="#1a312b"/>
+    </linearGradient>
+    <linearGradient id="river" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#6aa0b0"/>
+      <stop offset="100%" stop-color="#4c7a87"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky2)"/>
+  <path d="M0 360 L180 300 L330 330 L450 285 L620 345 L780 260 L950 330 L1200 270 L1200 800 L0 800 Z" fill="#264935"/>
+  <path d="M0 540 C140 520 230 510 350 500 C770 470 950 510 1200 490 L1200 800 L0 800 Z" fill="#1b3028"/>
+  <path d="M120 520 C300 470 360 475 500 520 C700 575 835 585 1040 545 L1120 575 C1040 610 975 630 860 630 C690 630 570 595 445 585 C315 575 190 595 120 620 Z" fill="url(#river)" opacity="0.85"/>
+  <path d="M0 660 C220 630 340 618 520 640 C790 670 960 690 1200 670 L1200 800 L0 800 Z" fill="#0f201a"/>
+</svg>

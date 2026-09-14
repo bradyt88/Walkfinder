@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>Profile - WalkFinder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button" type="button" data-back="index.html" aria-label="Go back">←</button>
+      <h1>Profile</h1>
+      <div class="topbar-spacer"></div>
+    </header>
+
+    <main class="page-content">
+      <section class="profile-card">
+        <div class="profile-avatar">WF</div>
+        <div class="profile-copy">
+          <h2>Wanderer</h2>
+          <p>Path collector</p>
+        </div>
+      </section>
+
+      <section class="stats-grid two-up" style="margin-top: 18px;">
+        <div class="stat-card">
+          <div id="savedCount" class="stat-value">0</div>
+          <div class="stat-label">Saved</div>
+        </div>
+        <div class="stat-card">
+          <div id="routeTypeCount" class="stat-value">0</div>
+          <div class="stat-label">Routes</div>
+        </div>
+      </section>
+
+      <ul class="simple-list">
+        <li>
+          <strong>Favourite area</strong>
+          <span>Lancashire</span>
+        </li>
+        <li>
+          <strong>Preferred style</strong>
+          <span>Outdoors &amp; quiet</span>
+        </li>
+        <li>
+          <strong>Trail notes</strong>
+          <span>View saved route details</span>
+        </li>
+      </ul>
+
+      <button class="button-primary full-width" type="button" data-page="add-path.html" style="margin-top: 22px;">＋ Add a Path</button>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item" type="button" data-page="index.html">
+        <span class="nav-icon">⌂</span>
+        <span>Discover</span>
+      </button>
+      <button class="nav-item" type="button" data-page="record-walk.html">
+        <span class="nav-icon">◉</span>
+        <span>Record</span>
+      </button>
+      <button class="nav-item primary-nav" type="button" data-page="add-path.html">
+        <span class="nav-icon">＋</span>
+        <span>Add Path</span>
+      </button>
+      <button class="nav-item" type="button" data-page="saved.html">
+        <span class="nav-icon">★</span>
+        <span>Saved</span>
+      </button>
+      <button class="nav-item active" type="button" data-page="profile.html">
+        <span class="nav-icon">☰</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
