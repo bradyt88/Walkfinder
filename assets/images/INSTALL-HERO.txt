@@ -1,0 +1,28 @@
+WALKFINDER — HERO IMAGE INSTALL
+
+1. In GitHub, create the folder:
+   assets/images/
+
+2. Upload walkfinder-hero.png into:
+   assets/images/walkfinder-hero.png
+
+3. Upload walkfinder-hero.css into the repository root.
+
+4. Open index.html.
+
+5. Find the main hero/container containing the text:
+   "Explore Walks"
+
+6. Add the class "walkfinder-hero" to that existing container.
+   If it already has a class attribute, add it rather than replacing it.
+   Example:
+   <section class="existing-class walkfinder-hero">
+
+7. Inside <head> in index.html, add:
+   <link rel="stylesheet" href="walkfinder-hero.css">
+
+8. Commit the changes.
+
+Keep the rest of the Discover page unchanged.
+Do not embed the image as base64.
+If the hero has an inline background-image, remove that old background-image from the hero only.
